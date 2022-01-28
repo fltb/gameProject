@@ -1,5 +1,4 @@
-import { Item } from "../item/item";
-import Phaser from "../phaser/phaser-full";
+import { Item } from "../item/item.js";
 
 export class Entity extends Phaser.GameObjects.Sprite {
 
