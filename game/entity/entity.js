@@ -9,25 +9,31 @@ export class Entity extends Phaser.GameObjects.Sprite {
      * @param {Number} x - x position
      * @param {Number} y - y position
      * @param {String} texture - texture
+     * @param {Object} infos - infomations of this entity
      * @param {String} infos.name - name of Entity
      * @param {String} infos.type - type of entity
      * @param {Array} infos.states - for collider check with block
      * @param {Number} infos.heart - health for entity
-     * @param {Item} [infos.hold]
+     * @param {Number} infos.speed - pixels per second
+     * @param {Item} [infos.hold] - Which item they held
      */
     constructor(scene, x, y, texture, infos) {
-        if (!(
-            typeof infos.name === 'string'
-        )) {
-            throw new Error("Missing nessecery infomations for Entity.");
-        }
+
         super(scene, x, y, texture);
 
         this.scene = scene;
         
-        this.infos = infos;
+        let defaultInfos = {
+            name: "undefined entity",
+            type: "entity",
+            states: [],
+            heart: 20,
+            speed: 250
+        }
 
-        scene.exsisting = this;
+        this.infos = Object.assign(defaultInfos, infos);
+
+        scene.physics.add.existing = this;
     }
     /**
      * Will be called while update
@@ -36,25 +42,48 @@ export class Entity extends Phaser.GameObjects.Sprite {
 
     }
 
-    onUse() {
-        if(this.infos.hold.use) {
+    use() {
+        if (
+            this.infos.hold &&
+            this.infos.hold.use &&
+            typeof this.infos.hold.use === "function"
+        ) {
             this.infos.hold.use(this);
         }
     }
 
     /**
-     * 
+     * Damage to the entity
      * @param {Number} damage - Damage to this entity
      */
-    onHurt(damage) {
+    hurt(damage) {
         this.infos.heart -= damage;
         if (this.infos.heart <= 0) {
-            this.onDie();
+            this.die();
         }
     }
 
-    onDie() {
+    die() {
         super.destroy();
     }
+    /**
+     * Move this entity to a position.
+     * You can move to two position in the same time.
+     * @param {Boolean} leftRight - true left false right
+     * @param {Boolean} upDown - true up false down
+     */
+    moveLeft() {
+        this.body.setVelocityX(-this.infos.speed);
+    }
+    moveRight() {
+        this.body.setVelocityX(this.infos.speed);
+    }
 
+    moveUp() {
+        this.body.setVelocityY(-this.infos.speed);
+    }
+
+    moveDown() {
+        this.body.setVelocityY(this.infos.speed);
+    }
 }
