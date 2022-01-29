@@ -30,7 +30,7 @@ export class WorldManager {
             if (properties) {
                 const type = properties.type;
                 if (type) {
-                    if (blockDefinations[type].collideCallback) {
+                    if (typeof blockDefinations[type].collideCallback === "function") {
                         this.map.setTileIndexCallback(i, blockDefinations[type].collideCallback, this.scene);
                     }
                 }
