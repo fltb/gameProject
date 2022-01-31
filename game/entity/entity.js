@@ -1,6 +1,6 @@
 import { Item } from "../item/item.js";
 
-export class Entity extends Phaser.GameObjects.Sprite {
+export class Entity extends Phaser.Physics.Arcade.Sprite {
 
     /**
      * An entity is a Phaser sprite with some actions.
@@ -23,23 +23,19 @@ export class Entity extends Phaser.GameObjects.Sprite {
 
         this.scene = scene;
         
-        let defaultInfos = {
+        this.infos = {
             name: "undefined entity",
             type: "entity",
             states: [],
             heart: 20,
-            speed: 250
+            speed: 150,
+            /**@type {Boolean} - true left false right */
+            towards: false 
         }
 
-        this.infos = Object.assign(defaultInfos, infos);
-
-        scene.physics.add.existing = this;
-    }
-    /**
-     * Will be called while update
-     */
-    update() {
-
+        Object.assign(this.infos, infos);
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
     }
 
     use() {
@@ -73,17 +69,50 @@ export class Entity extends Phaser.GameObjects.Sprite {
      * @param {Boolean} upDown - true up false down
      */
     moveLeft() {
-        this.body.setVelocityX(-this.infos.speed);
+        this.infos.towards = true;
+        this.playAnimationRun();
+        this.setVelocityX(-this.infos.speed);
     }
     moveRight() {
-        this.body.setVelocityX(this.infos.speed);
+        this.infos.towards = false;
+        this.playAnimationRun();
+        this.setVelocityX(this.infos.speed);
     }
 
     moveUp() {
-        this.body.setVelocityY(-this.infos.speed);
+        this.playAnimationRun();
+        this.setVelocityY(-this.infos.speed);
     }
 
     moveDown() {
-        this.body.setVelocityY(this.infos.speed);
+        this.playAnimationRun();
+        this.setVelocityY(this.infos.speed);
+    }
+
+    clearMoveX() {
+        this.setVelocityX(0);
+    }
+
+    clearMoveY() {
+        this.setVelocityY(0);
+    }
+
+    clearMove() {
+        this.playAnimationStand();
+        this.setVelocity(0);
+    }
+
+    playAnimationStand() {
+        this.anims.play(this.infos.name + '-stand');
+    }
+
+    playAnimationRun() {
+        if (this.infos.towards) {
+            // left
+            this.anims.play(this.infos.name + '-left', true);
+        } else {
+            // right
+            this.anims.play(this.infos.name + '-right', true);
+        }
     }
 }
