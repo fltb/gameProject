@@ -124,7 +124,7 @@
                  "id":48,
                  "properties":[
                         {
-                         "name":"allow",
+                         "name":"allows",
                          "type":"string",
                          "value":"player"
                         }, 
