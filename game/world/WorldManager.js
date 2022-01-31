@@ -23,7 +23,7 @@ export class WorldManager {
         // add collision to blocks, ID!
         const BLOCK_BEGIN = 32;
         const BLOCK_END = 53;
-        this.map.setCollisionBetween(BLOCK_BEGIN, BLOCK_END);
+        this.physicsLayer.setCollisionBetween(BLOCK_BEGIN, BLOCK_END);
 
         for (let i = BLOCK_BEGIN; i <= BLOCK_END; i++) {
             const properties = this.tileset.getTileProperties(i);
@@ -31,7 +31,7 @@ export class WorldManager {
                 const type = properties.type;
                 if (type) {
                     if (typeof blockDefinations[type].collideCallback === "function") {
-                        this.map.setTileIndexCallback(i, blockDefinations[type].collideCallback, this.scene);
+                        this.physicsLayer.setTileIndexCallback(i, blockDefinations[type].collideCallback, this.scene);
                     }
                 }
             }
@@ -43,6 +43,6 @@ export class WorldManager {
      * @param {Entity} entity 
      */
     addEntity(entity) {
-        this.scene.add.collider(entity, this.physicsLayer);
+        this.scene.physics.add.collider(entity, this.physicsLayer);
     }
 }
