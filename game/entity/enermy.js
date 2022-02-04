@@ -1,4 +1,6 @@
-import { Entity } from "./entity";
+import { EnermyAI } from "../logic/enermyAI.js";
+import { WorldManager } from "../world/WorldManager.js";
+import { Entity } from "./entity.js";
 
 export class Enermy extends Entity {
 
@@ -21,5 +23,9 @@ export class Enermy extends Entity {
         infos.type = "enermy";
         super(scene, x, y, texture, infos);
         
+    }
+    /**@param {WorldManager} worldManager */
+    addAI(worldManager) {
+        this.AI = new EnermyAI(this.scene, worldManager, this);
     }
 }
