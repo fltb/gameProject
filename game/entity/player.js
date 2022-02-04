@@ -1,7 +1,7 @@
 import { Entity } from "./entity.js";
 import { config } from "../config/config.js";
 
-export default class Player extends Entity {
+export class Player extends Entity {
 
     /**
      * 
