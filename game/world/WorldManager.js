@@ -36,6 +36,8 @@ export class WorldManager {
                 }
             }
         }
+
+        this.exportToArray();
     }
 
     /**
@@ -44,5 +46,46 @@ export class WorldManager {
      */
     addEntity(entity) {
         this.scene.physics.add.collider(entity, this.physicsLayer);
+    }
+
+    /**
+     * 
+     * @returns {Array<Array<Number>>} - grid[y][x];
+     */
+    exportToArray() {
+
+        let exportArray;
+
+        let collideIndexes = [];
+        
+        for (let i = 0; i < this.map.layers.length; i++) {
+            const element = this.map.layers[i];
+            if (element.name.indexOf("physics") === 0) {
+                if (!exportArray) {
+                    exportArray = []
+                    for (let y = 0; y < element.height; y++) {
+                        exportArray[y] = [];
+                        for (let x = 0; x < element.width; x++) {
+                            exportArray[y][x] = 0;
+                        }
+                    }
+                }
+
+                for (let i = 0; i < element.collideIndexes.length; i++) {
+                    collideIndexes[element.collideIndexes[i]] = true;
+                }
+
+                for (let i = 0; i < element.height; i++) {
+                    for (let j = 0; j < element.width; j++) {
+                        const tile = element.data[i][j];
+                        if (!exportArray[i][j] && collideIndexes[tile.index]) {
+                            exportArray[i][j] = tile.index;
+                        }
+                    }
+                }
+            }
+        }
+
+        return exportArray;
     }
 }
