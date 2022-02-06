@@ -1,0 +1,143 @@
+<style>
+    @font-face {
+        font-family: "Unifont";
+        src: url(/UpstreamSource/unifont/unifont-14.0.01.ttf);
+    }
+
+    .self-infos {
+        font-family: "Unifont";
+        color: azure;
+        height: 4.2em;
+        width: 48em;
+
+        padding: 0.3em;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 0.2em;
+
+        display: flex;
+    }
+    .big-box-layer {
+        border: 0.4em rgb(214, 214, 214) solid;
+        border-radius: 0.2em;
+        box-shadow: 0 0 0.2em rgba(24, 24, 24, 0.6), inset 0 0 0.2em rgba(24, 24, 24, 0.6);
+        background-color: rgb(56, 56, 56);
+        margin: 0.2em;
+    }
+    .statues-bars {
+        margin: 0.1em;
+        margin-left: 0.3em;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .statues-bars > div {
+        display: flex;
+        margin-top: 0.2em;
+    }
+
+    .statues-bars > div:first-child {
+        margin-top: auto;
+    }
+
+    .statues-bars > div > div {
+        margin-left: 0.2em;
+    }
+    .statues-bars > div > div:first-child {
+        margin-left: 0;
+    }
+    .statues-bars .bar {
+        display: grid;
+        grid-template-columns: 1.8em 7em 2.6em;
+    }
+    .statues-bars .title {
+        background-color: rgb(214, 214, 214);
+        box-shadow: 0 0 0.2em rgba(24, 24, 24, 0.6);
+        border-radius: 0.1em;
+        padding: 0 0.15em 0 0.15em;
+        font-weight: bold;
+        color: #3f3f3f;
+    }
+
+    .statues-bars .volume {
+        background-color: #3f3f3f;
+        border: 0.4em solid #888f91;
+        border-radius: 0.1em;
+        margin-right: 0.2em;
+    }
+
+    .statues-bars .volume-color {
+        background-color: #f1a05d;
+        height: 100%;
+        width: 50%;
+    }
+
+    .statues-bars .state-info {
+        color:rgb(214, 214, 214);
+        font-weight: bold;
+        text-shadow: #3f3f3f;
+        background-color: #3f3f3f7a;
+        border-radius: 0.1em;
+        margin-left: auto;
+        text-align: center;
+        width: 100%;
+    }
+
+    .push {
+        margin-left: auto;
+    }
+
+    /*big box layer's info and img*/
+    .big-box-layer {
+        width: 3.2em;
+        height: 3.2em;
+        position: relative;
+    }
+    .big-box-layer .info {
+        position: absolute;
+        text-shadow: #3f3f3f;
+        z-index: 10; 
+        font-weight: bold;
+        top: 2em;
+        left: 2em;
+    }
+    .big-box-layer img {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<div class="self-infos">
+    <div class="big-box-layer player-pic">
+        <div class="info">32</div>
+        <img src="" title=""></img>
+    </div>
+    <div class="statues-bars">
+        <div class="infomations">
+            <div class="title name">NAME</div>
+            <div class="title state">STATE</div>
+        </div>
+        <div class="hp bar">
+            <div class="title">HP:</div>
+            <div class="volume">
+                <div class="volume-color"></div>
+            </div>
+            <div class="state-info">0/20</div>
+        </div>
+        <div class="mp bar">
+            <div class="title">MP:</div>
+            <div class="volume">
+                <div class="volume-color"></div>
+            </div>
+            <div class="state-info">10/20</div>
+        </div>
+    </div>
+    <div class="push"></div>
+    <div class="left-click-bar big-box-layer">
+        <div class="info">999</div>
+        <img src="" title=""></img>
+    </div>
+    <div class="right-click-bar big-box-layer">
+        <div class="info">999</div>
+        <img src="" title=""></img>
+    </div>
+</div>
