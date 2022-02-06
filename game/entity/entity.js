@@ -13,9 +13,11 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
      * @param {String} infos.name - name of Entity
      * @param {String} infos.type - type of entity
      * @param {Array} infos.states - for collider check with block
-     * @param {Number} infos.heart - health for entity
+     * @param {Number} infos.hp.now - health for entity
+     * @param {Number} infos.hp.total - total health for entity
      * @param {Number} infos.speed - pixels per second
-     * @param {Item} [infos.hold] - Which item they held
+     * @param {Item} [infos.hold.leftHand] - Which item they held on left hand
+     * @param {Item} [infos.hold.rightHand] - Which item they held on left hand
      */
     constructor(scene, x, y, texture, infos) {
 
@@ -27,8 +29,17 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
             name: "undefined entity",
             type: "entity",
             states: [],
-            heart: 20,
+            hp: {
+                now: 20,
+                total: 20
+            },
             speed: 150,
+            hold: {
+                /**@type {Item} */
+                rightHand: undefined,
+                /**@type {Item} */
+                leftHand: undefined,
+            },
             /**@type {Boolean} - true left false right */
             towards: false 
         }
@@ -38,23 +49,24 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
     }
 
-    use() {
-        if (
-            this.infos.hold &&
-            this.infos.hold.use &&
-            typeof this.infos.hold.use === "function"
-        ) {
-            this.infos.hold.use(this);
+    useLeft() {
+        if (this.hold.leftHand) {
+           this.hold.leftHand.use(this);
         }
     }
 
+    useRight() {
+        if (this.hold.rightHand) {
+            this.hold.rightHand.use(this);
+        }
+    }
     /**
      * Damage to the entity
      * @param {Number} damage - Damage to this entity
      */
     hurt(damage) {
-        this.infos.heart -= damage;
-        if (this.infos.heart <= 0) {
+        this.infos.hp.now -= damage;
+        if (this.infos.hp.now <= 0) {
             this.die();
         }
     }

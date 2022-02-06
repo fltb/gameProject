@@ -13,9 +13,13 @@ export class Player extends Entity {
      * @param {String} infos.name - name of Entity
      * @param {String} infos.type - type of entity
      * @param {Array} infos.states - for collider check with block
-     * @param {Number} infos.heart - health for entity
+     * @param {Number} infos.hp.now - health for entity
+     * @param {Number} info.hp.total - total health for entity
+     * @param {Number} infos.mp.now - magic for entity
+     * @param {Number} info.mp.total - total magic for entity 
      * @param {Number} infos.speed - pixels per second
-     * @param {Item} [infos.hold] - Which item they held
+     * @param {Item} infos.hold.leftHand - Which item they held on left hand
+     * @param {Item} infos.hold.rightHand - Which item they held on right hand
      * @param {String} animation - Animation's name
      */
     constructor(scene, x, y, texture, infos) {
@@ -26,6 +30,7 @@ export class Player extends Entity {
             cd: 500,
             time: 150,
         };
+
         super(scene, x, y, texture, infos);
 
         this.locks = {};
