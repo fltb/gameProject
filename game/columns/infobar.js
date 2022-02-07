@@ -12,21 +12,16 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
 
     .self-infos {
         font-family: "Unifont";
-        color: azure;
         height: 4.2em;
         width: 48em;
 
         padding: 0.3em;
-        background-color: rgba(0, 0, 0, 0.2);
         border-radius: 0.2em;
 
         display: flex;
     }
     .big-box-layer {
-        border: 0.4em rgb(214, 214, 214) solid;
         border-radius: 0.2em;
-        box-shadow: 0 0 0.2em rgba(24, 24, 24, 0.6), inset 0 0 0.2em rgba(24, 24, 24, 0.6);
-        background-color: rgb(56, 56, 56);
         margin: 0.2em;
     }
     .statues-bars {
@@ -56,32 +51,23 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
         grid-template-columns: 1.8em 7em 2.6em;
     }
     .statues-bars .title {
-        background-color: rgb(214, 214, 214);
-        box-shadow: 0 0 0.2em rgba(24, 24, 24, 0.6);
         border-radius: 0.1em;
         padding: 0 0.15em 0 0.15em;
         font-weight: bold;
-        color: #3f3f3f;
     }
 
     .statues-bars .volume {
-        background-color: #3f3f3f;
-        border: 0.4em solid #888f91;
         border-radius: 0.1em;
         margin-right: 0.2em;
     }
 
     .statues-bars .volume-color {
-        background-color: #f1a05d;
         height: 100%;
         width: 50%;
     }
 
     .statues-bars .state-info {
-        color:rgb(214, 214, 214);
         font-weight: bold;
-        text-shadow: #3f3f3f;
-        background-color: #3f3f3f7a;
         border-radius: 0.1em;
         margin-left: auto;
         text-align: center;
@@ -100,7 +86,6 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
     }
     .big-box-layer .info {
         position: absolute;
-        text-shadow: #3f3f3f;
         z-index: 10; 
         font-weight: bold;
         top: 2em;
@@ -110,12 +95,63 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
         width: 100%;
         height: 100%;
     }
+    .big-box-layer .cover {
+        position: absolute;
+        width: 100%;
+        height: 0%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    /*COLORS*/
+    .self-infos {
+        color: azure;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .statues-bars .title {
+        background-color: rgb(202, 209, 214);
+        box-shadow: 0 0 0.2em rgba(24, 24, 24, 0.6);
+        color: #3f3f3f;
+    }
+
+    .statues-bars .volume {
+        background-color: #3f3f3f;
+        border: 0.4em solid #8b9699;
+    }
+
+    .statues-bars .volume-color {
+        background-color: #f1a05d;
+    }
+
+    .statues-bars .state-info {
+        color:rgb(214, 214, 214);
+        text-shadow: #3f3f3f;
+        background-color: #3f3f3f7a;
+    }
+
+    .big-box-layer .info {
+        text-shadow: #3f3f3f;
+    }
+
+    .big-box-layer {
+        border: 0.4em rgb(197, 203, 207) solid;
+        box-shadow: 0 0 0.2em rgba(24, 24, 24, 0.6), inset 0 0 0.2em rgba(24, 24, 24, 0.6);
+        background-color: rgb(56, 56, 56);
+    }
+
+    .big-box-layer .cover {
+        background-color: rgba(202, 220, 226, 0.26);
+    }
+
 </style>
 
 <div class="self-infos">
     <div class="big-box-layer player-pic">
-        <div class="info">32</div>
         <img src="" title=""></img>
+        <div class="cover"></div>
+        <div class="info"></div>
     </div>
     <div class="statues-bars">
         <div class="infomations">
@@ -127,24 +163,26 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
             <div class="volume">
                 <div class="volume-color"></div>
             </div>
-            <div class="state-info">0/20</div>
+            <div class="state-info">20/20</div>
         </div>
         <div class="mp bar">
             <div class="title">MP:</div>
             <div class="volume">
                 <div class="volume-color"></div>
             </div>
-            <div class="state-info">10/20</div>
+            <div class="state-info">20/20</div>
         </div>
     </div>
     <div class="push"></div>
     <div class="left-click-bar big-box-layer">
-        <div class="info">999</div>
         <img src="" title=""></img>
+        <div class="cover"></div>
+        <div class="info"></div>
     </div>
     <div class="right-click-bar big-box-layer">
-        <div class="info">999</div>
         <img src="" title=""></img>
+        <div class="cover"></div>
+        <div class="info"></div>
     </div>
 </div>
 `
@@ -226,6 +264,7 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
             playerAvatar: {
                 pic: document.querySelector(".self-infos .player-pic img"),
                 info: document.querySelector(".self-infos .player-pic .info"),
+                cover: document.querySelector(".self-infos .player-pic .cover"),
             },
             name: document.querySelector(".self-infos .name"),
             state: document.querySelector(".self-infos .state"),
