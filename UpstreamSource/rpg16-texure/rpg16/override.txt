@@ -1,0 +1,28 @@
+default:tinblock bottom default_tin_block_top.png
+default:tinblock top default_tin_block_top.png
+
+darks:darkblock top darkblock_top.png
+darks:darkblock bottom darkblock_bottom.png
+
+ethereal:birch_leaves * ethereal_birch_leaves.png
+ethereal:palmleaves * ethereal_palm_leaves.png
+
+farming:seed_wheat * farming_wheat_0.png
+farming:seed_cotton * farming_cotton_0.png
+
+moreores:silver_block bottom moreores_silver_block_top.png
+moreores:silver_block top moreores_silver_block_top.png
+
+caverealms:glow_obsidian_2 * magma_conduits_glow_obsidian.png
+caverealms:hot_cobble * magma_conduits_hot_cobble.png
+caverealms:mushroom_stem bottom caverealms_mushroom_stem_top.png
+caverealms:mushroom_stem top caverealms_mushroom_stem_top.png
+
+default:fence * default_fence_wood.png
+default:fence_birch * default_wood_birch.png
+default:fence_oak * default_wood_oak.png
+
+sniper_rifles:rifle_762 wield sniper_rifles_rifle_762_wield.png
+sniper_rifles:rifle_762_loaded wield sniper_rifles_rifle_762_wield.png
+sniper_rifles:rifle_magnum wield sniper_rifles_rifle_magnum_wield.png
+sniper_rifles:rifle_magnum_loaded wield sniper_rifles_rifle_magnum_wield.png
