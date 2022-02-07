@@ -3,21 +3,35 @@ import { Item } from "../item/item.js";
 export class Entity extends Phaser.Physics.Arcade.Sprite {
 
     /**
+     * @typedef Locks
+     * @type {Object}
+     * @property {Boolean} move - move's lock
+     */
+
+    /**
+     * 
+     * @typedef Infos
+     * @type {Object}
+     * @property {Boolean} move - move's lock     
+     * @property {String} name - name of Entity
+     * @property {String} type - type of entity
+     * @property {Array} states - for collider check with block
+     * @property {Number} hp.now - health for entity
+     * @property {Number} hp.total - total health for entity
+     * @property {Number} speed - pixels per second
+     * @property {Item} [hold.leftHand] - Which item they held on left hand
+     * @property {Item} [hold.rightHand] - Which item they held on left hand
+     * @property {Boolean} [towards] - true left false right
+     */
+
+    /**
      * An entity is a Phaser sprite with some actions.
      * 
      * @param {Phaser.Scene} scene - Scene
      * @param {Number} x - x position
      * @param {Number} y - y position
      * @param {String} texture - texture
-     * @param {Object} infos - infomations of this entity
-     * @param {String} infos.name - name of Entity
-     * @param {String} infos.type - type of entity
-     * @param {Array} infos.states - for collider check with block
-     * @param {Number} infos.hp.now - health for entity
-     * @param {Number} infos.hp.total - total health for entity
-     * @param {Number} infos.speed - pixels per second
-     * @param {Item} [infos.hold.leftHand] - Which item they held on left hand
-     * @param {Item} [infos.hold.rightHand] - Which item they held on left hand
+     * @param {Infos} infos - infomations of this entity
      */
     constructor(scene, x, y, texture, infos) {
 
@@ -25,6 +39,7 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
 
         this.scene = scene;
         
+        /**@type {Infos} */
         this.infos = {
             name: "undefined entity",
             type: "entity",
@@ -35,14 +50,19 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
             },
             speed: 150,
             hold: {
-                /**@type {Item} */
                 rightHand: undefined,
-                /**@type {Item} */
                 leftHand: undefined,
             },
-            /**@type {Boolean} - true left false right */
             towards: false 
         }
+
+        
+        /**
+         * @type {Locks}
+         */
+        this.locks = {
+            move: false
+        };
 
         Object.assign(this.infos, infos);
         scene.add.existing(this);

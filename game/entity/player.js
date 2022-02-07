@@ -5,21 +5,28 @@ export class Player extends Entity {
 
     /**
      * 
+     * @typedef Infos
+     * @type {Object}
+     * @property {Boolean} move - move's lock     
+     * @property {String} name - name of Entity
+     * @property {String} type - type of entity
+     * @property {Array} states - for collider check with block
+     * @property {Number} hp.now - health for entity
+     * @property {Number} hp.total - total health for entity
+     * @property {Number} speed - pixels per second
+     * @property {Item} [hold.leftHand] - Which item they held on left hand
+     * @property {Item} [hold.rightHand] - Which item they held on left hand
+     * @property {Boolean} [towards] - true left false right
+     */
+
+
+    /**
+     * 
      * @param {Phaser.Scene} scene - Scene
      * @param {Number} x - x position
      * @param {Number} y - y position
      * @param {String} texture - texture
-     * @param {Object} infos - infomations of this entity
-     * @param {String} infos.name - name of Entity
-     * @param {String} infos.type - type of entity
-     * @param {Array} infos.states - for collider check with block
-     * @param {Number} infos.hp.now - health for entity
-     * @param {Number} info.hp.total - total health for entity
-     * @param {Number} infos.mp.now - magic for entity
-     * @param {Number} info.mp.total - total magic for entity 
-     * @param {Number} infos.speed - pixels per second
-     * @param {Item} infos.hold.leftHand - Which item they held on left hand
-     * @param {Item} infos.hold.rightHand - Which item they held on right hand
+     * @param {Infos} infos
      * @param {String} animation - Animation's name
      */
     constructor(scene, x, y, texture, infos) {
@@ -32,8 +39,6 @@ export class Player extends Entity {
         };
 
         super(scene, x, y, texture, infos);
-
-        this.locks = {};
 
         // remember move is not always the "WASD" key on keyboard
         scene.input.mouse.disableContextMenu();
