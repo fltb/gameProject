@@ -37,15 +37,60 @@ export class WorldManager {
             }
         }
 
-        this.exportToArray();
+        /**
+         * @typedef {Object} EntityContainer
+         * @property {Array<Entity>} container
+         * @property {Object} types - .types[type] is a array of entities id of this type
+        */
+
+        /**
+         * @type {EntityContainer}
+         */
+        this.entities = {
+            container:[],
+            types:{}
+        };
+    }
+
+    /**
+     * 
+     * @param {Entity} entity 
+     * @returns {Number} - id of this entity
+     */
+    addEntity(entity) {
+        const id = this.entities.container.push(entity) - 1;
+        if (!this.entities.types[entity.infos.type]) {
+            this.entities.types[entity.infos.type] = [];
+        } else {
+            this.entities.types[entity.infos.type].push(id);
+        }
+        return id;
+    }
+
+    /**
+     * 
+     * @param {Entity} entity 
+     * @param {Function} [collideCallback]
+     * @param {Function} [processCallback]
+     * @param {*} [callbackContext]
+     */
+    addEntityCollide(entity, collideCallback, processCallback, callbackContext) {
+        this.scene.physics.add.collider(entity, this.physicsLayer, collideCallback, processCallback, callbackContext);
     }
 
     /**
      * 
      * @param {Entity} entity 
      */
-    addEntity(entity) {
-        this.scene.physics.add.collider(entity, this.physicsLayer);
+    removeEntity(entity) {
+        const id = entity.id;
+        const type = entity.infos.type;
+        delete this.entities.container[id];
+        for (let i = 0; i < this.entities.types[type].length; i++) {
+            if (this.entities.types[type][i] === id) {
+                this.entities.types[type].splice(i, 1);
+            }
+        }
     }
 
     /**
