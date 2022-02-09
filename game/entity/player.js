@@ -1,22 +1,28 @@
 import { Entity } from "./entity.js";
 import { config } from "../config/config.js";
+import { WorldManager } from "../world/WorldManager.js";
+import { Item } from "../item/item.js";
+import { Sword } from "../item/sword.js";
 
 export class Player extends Entity {
 
     /**
      * 
      * @typedef Infos
-     * @type {Object}
-     * @property {Boolean} move - move's lock     
-     * @property {String} name - name of Entity
-     * @property {String} type - type of entity
-     * @property {Array} states - for collider check with block
-     * @property {Number} hp.now - health for entity
-     * @property {Number} hp.total - total health for entity
-     * @property {Number} speed - pixels per second
-     * @property {Item} [hold.leftHand] - Which item they held on left hand
-     * @property {Item} [hold.rightHand] - Which item they held on left hand
-     * @property {Boolean} [towards] - true left false right
+     * @type {{
+     *      name: String,
+     *       type: String,
+     *       states: Array,
+     *       hp: {
+      *          now: Number,
+      *          total: Number
+      *      },
+      *      speed: Number,
+      *      hold: {
+      *          rightHand: Item,
+      *          leftHand: Item,
+      *      },
+      *  }}
      */
 
 
@@ -28,8 +34,9 @@ export class Player extends Entity {
      * @param {String} texture - texture
      * @param {Infos} infos
      * @param {String} animation - Animation's name
+     * @param {WorldManager} worldManager
      */
-    constructor(scene, x, y, texture, infos) {
+    constructor(scene, x, y, texture, infos, worldManager) {
         infos.type = "player";
         /**@type {Object} - dash's info */
         infos.dash = {
@@ -37,8 +44,8 @@ export class Player extends Entity {
             cd: 500,
             time: 150,
         };
-
-        super(scene, x, y, texture, infos);
+        infos.speed = 300
+        super(scene, x, y, texture, infos, worldManager);
 
         // remember move is not always the "WASD" key on keyboard
         scene.input.mouse.disableContextMenu();
@@ -54,7 +61,12 @@ export class Player extends Entity {
 
         const pointer = this.scene.input.activePointer;
         if (pointer.rightButtonDown()) {
-            this.skillDash(pointer);
+            // left hand is right click!!!
+            this.useLeft(pointer);
+        }
+
+        if (pointer.leftButtonDown()) {
+            this.useRight(pointer);
         }
     }
 
@@ -84,7 +96,8 @@ export class Player extends Entity {
     }
 
     /** */
-    skillDash(pointer) {
+    useLeft(pointer) {
+        super.useRight(this.getTowordRadian(pointer));
         if (this.locks.dash) {
             return;
         }
@@ -94,17 +107,13 @@ export class Player extends Entity {
 
         this.setVisible(false)
 
-        const  diffX = pointer.x - this.x, diffY = pointer.y-this.y;
-        const degree = Math.atan(diffY / diffX);
-        let mvX = this.infos.dash.distance * Math.cos(degree);
-        let mvY = this.infos.dash.distance * Math.sin(degree);
-        if (diffX < 0) {
-            mvX = -mvX;
-            mvY = -mvY;
-        }
+        const radian = this.getTowordRadian(pointer);
+        let mvX = this.infos.dash.distance * Math.cos(radian);
+        let mvY = this.infos.dash.distance * Math.sin(radian);
+
         mvX *= 1000 / this.infos.dash.time;
         mvY *= 1000 / this.infos.dash.time;
-        
+
         this.setVelocity(mvX, mvY);
         this.scene.time.delayedCall(this.infos.dash.time, function name() {
             that.clearMove();
@@ -114,5 +123,13 @@ export class Player extends Entity {
         this.scene.time.delayedCall(this.infos.dash.cd, function name() {
             that.locks.dash = false;
         }, [], this.scene);
+    }
+
+    /**
+     * 
+     * @param {*} pointer 
+     */
+    useRight(pointer) {
+        super.useLeft(this.getTowordRadian(pointer));
     }
 }

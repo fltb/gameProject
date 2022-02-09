@@ -1,4 +1,5 @@
 import { Item } from "../item/item.js";
+import { WorldManager } from "../world/WorldManager.js";
 
 export class Entity extends Phaser.Physics.Arcade.Sprite {
 
@@ -6,22 +7,27 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
      * @typedef Locks
      * @type {Object}
      * @property {Boolean} move - move's lock
+     * @property {Boolean} hurt
      */
 
     /**
      * 
      * @typedef Infos
-     * @type {Object}
-     * @property {Boolean} move - move's lock     
-     * @property {String} name - name of Entity
-     * @property {String} type - type of entity
-     * @property {Array} states - for collider check with block
-     * @property {Number} hp.now - health for entity
-     * @property {Number} hp.total - total health for entity
-     * @property {Number} speed - pixels per second
-     * @property {Item} [hold.leftHand] - Which item they held on left hand
-     * @property {Item} [hold.rightHand] - Which item they held on left hand
-     * @property {Boolean} [towards] - true left false right
+     * @type {{
+     *      name: String,
+     *       type: String,
+     *       states: Array,
+     *       hp: {
+      *          now: Number,
+      *          total: Number
+      *      },
+      *      speed: Number,
+      *      hold: {
+      *          rightHand: Item,
+      *          leftHand: Item,
+      *      },
+      *      towards: Boolean 
+      *  }}
      */
 
     /**
@@ -32,8 +38,9 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
      * @param {Number} y - y position
      * @param {String} texture - texture
      * @param {Infos} infos - infomations of this entity
+     * @param {WorldManager} worldManager
      */
-    constructor(scene, x, y, texture, infos) {
+    constructor(scene, x, y, texture, infos, worldManager) {
 
         super(scene, x, y, texture);
 
@@ -67,17 +74,28 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
         Object.assign(this.infos, infos);
         scene.add.existing(this);
         scene.physics.add.existing(this);
+
+        this.worldManager = worldManager;
+        /**@type {Number} - the id of this entity */
+        this.id = this.worldManager.addEntity(this);
     }
 
-    useLeft() {
-        if (this.hold.leftHand) {
-           this.hold.leftHand.use(this);
+    /**
+     * 
+     * @param {Number} toword - radian
+     */
+    useLeft(toword) {
+        if (this.infos.hold.leftHand) {
+           this.infos.hold.leftHand.use(this, toword);
         }
     }
 
-    useRight() {
-        if (this.hold.rightHand) {
-            this.hold.rightHand.use(this);
+    /**
+     * @param {Number} toword - radian
+     */
+    useRight(toword) {
+        if (this.infos.hold.rightHand) {
+            this.infos.hold.rightHand.use(this, toword);
         }
     }
     /**
@@ -85,6 +103,9 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
      * @param {Number} damage - Damage to this entity
      */
     hurt(damage) {
+        if (this.locks.hurt) {
+            return;
+        }
         this.infos.hp.now -= damage;
         if (this.infos.hp.now <= 0) {
             this.die();
@@ -92,6 +113,7 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
     }
 
     die() {
+        this.worldManager.removeEntity(this);
         super.destroy();
     }
     /**
@@ -146,5 +168,18 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
             // right
             this.anims.play(this.infos.name + '-right', true);
         }
+    }
+
+    /**
+     * @param {Object} toword - have.x, .y
+     * @returns {Number} - radian
+     *  */
+    getTowordRadian(toword) {
+        const diffX = toword.x - this.x, diffY = toword.y-this.y;
+        let radian = Math.atan(diffY / diffX);
+        if (diffX < 0) {
+            radian += Math.PI;
+        }
+        return radian;
     }
 }

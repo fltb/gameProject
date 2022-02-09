@@ -18,10 +18,11 @@ export class Enermy extends Entity {
      * @param {Number} infos.heart - health for entity
      * @param {Number} infos.speed - pixels per second
      * @param {Item} [infos.hold] - Which item they held
+     * @param {WorldManager} worldManager
      */
-    constructor(scene, x, y, texture, infos) {
+    constructor(scene, x, y, texture, infos, worldManager) {
         infos.type = "enermy";
-        super(scene, x, y, texture, infos);
+        super(scene, x, y, texture, infos, worldManager);
         
     }
     /**@param {WorldManager} worldManager */
