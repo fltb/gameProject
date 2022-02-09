@@ -59,9 +59,8 @@ class Game extends Phaser.Scene {
             heart: 20,
             states: ["player"],
             speed: 300
-        });
-        this.worldManager.addEntity(this.player);
-
+        }, this.worldManager);
+        this.worldManager.addEntityCollide(this.player);
         this.anims.create({
             key: 'testman-left',
             frames: [{ key: 'testman-animation', frame: 0 }],
@@ -87,9 +86,8 @@ class Game extends Phaser.Scene {
             type: "player",
             heart: 20,
             states: ["player"],
-            speed: 300
-        });
-        this.worldManager.addEntity(this.enermy);
+        }, this.worldManager);
+        this.worldManager.addEntityCollide(this.enermy);
         this.enermy.addAI(this.worldManager);
         this.enermy.AI.setHateTarget(this.player);
         this.enermy.AI.startCharseTarget();

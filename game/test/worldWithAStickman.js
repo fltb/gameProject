@@ -52,8 +52,8 @@ class Game extends Phaser.Scene {
             heart: 20,
             states: ["player"],
             speed: 300
-        });
-        this.worldManager.addEntity(this.player); 
+        }, this.worldManager);
+        this.worldManager.addEntityCollide(this.player)
     }
 
     update() {

@@ -61,14 +61,25 @@ class Game extends Phaser.Scene {
             },
             states: ["player"],
             speed: 300
-        });
-        this.worldManager.addEntity(this.player);
-
+        }, this.worldManager);
+        this.worldManager.addEntityCollide(this.player);
         /*const pxPerEm = parseFloat(getComputedStyle(document.body).fontSize);
         const height = pxPerEm * 2.5;
         this.infobar = this.add.dom(this.scale.width / 2, this.scale.height - height).createFromCache('info-bar');
         */
-       this.infoBar = new InfoBar(this, this.player);
+        this.infoBar = new InfoBar(this, this.player);
+
+        this.enermy = new Enermy(this, 300, 200, "testman-animation", {
+            name: "testman",
+            type: "player",
+            heart: 20,
+            states: ["player"],
+        }, this.worldManager);
+        this.worldManager.addEntityCollide(this.enermy);
+        this.enermy.addAI(this.worldManager);
+        this.enermy.AI.setHateTarget(this.player);
+        this.enermy.AI.startCharseTarget();
+
     }
 
     update() {
