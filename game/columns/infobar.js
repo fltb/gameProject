@@ -260,12 +260,52 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
             }
         }
 
+        /**
+         * @typedef { Object } Bar
+         * @type {{
+         *      pic: Node,
+         *      info: Node,
+         *      cover: Node
+         * }}
+         * 
+         */
+
+        /**
+         * @typedef {Object} NodeElements
+         * 
+         * @type {{
+         *      playerAvatar: Bar,
+         *      name: Node,
+         *      state: Node,
+         *      hp: {
+         *          volumeColor: Node,
+         *          stateInfo: Node
+         *      },
+         *      mp: {
+         *          volumeColor: Node,
+         *          stateInfo: Node
+         *      },
+         *      leftClickBar: Bar,
+         *      rightChickBar: Bar
+         * }}
+         * 
+         */
+        
+        /**
+         * @param {String} className
+         * @returns {Bar}
+         */
+        function getBar(className) {
+            return {
+                pic: document.querySelector(".self-infos " + className +" img"),
+                info: document.querySelector(".self-infos " + className + " .info"),
+                cover: document.querySelector(".self-infos " + getBar + " .cover"),
+            }
+        }
+
+        /**@type {NodeElements} */
         this.nodes = {
-            playerAvatar: {
-                pic: document.querySelector(".self-infos .player-pic img"),
-                info: document.querySelector(".self-infos .player-pic .info"),
-                cover: document.querySelector(".self-infos .player-pic .cover"),
-            },
+            playerAvatar: getBar(".player-pic"),
             name: document.querySelector(".self-infos .name"),
             state: document.querySelector(".self-infos .state"),
             hp: {
@@ -276,8 +316,8 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
                 volumeColor: document.querySelector(".self-infos .mp .volume-color"),
                 stateInfo: document.querySelector(".self-infos .mp .state-info")
             },
-            leftClickBar: document.querySelector(".self-infos .left-click-bar"),
-            rightChickBar: document.querySelector(".self-infos .right-click-bar"),
+            leftClickBar: getBar(".left-click-bar"),
+            rightChickBar: getBar(".right-click-bar"),
         }
 
         lang.setLang("zh");
