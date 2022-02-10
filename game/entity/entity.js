@@ -1,5 +1,5 @@
-import { Item } from "../../item/item.js";
-import { WorldManager } from "../../world/WorldManager.js";
+import { Item } from "../item/item.js";
+import { WorldManager } from "../world/WorldManager.js";
 
 export class Entity extends Phaser.Physics.Arcade.Sprite {
 

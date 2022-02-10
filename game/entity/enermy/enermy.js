@@ -1,6 +1,6 @@
-import { EnermyAI } from "../logic/enermyAI.js";
-import { WorldManager } from "../world/WorldManager.js";
-import { Entity } from "./entity.js";
+import { EnermyAI } from "../../logic/enermyAI.js";
+import { WorldManager } from "../../world/WorldManager.js";
+import { Entity } from "../entity.js";
 
 export class Enermy extends Entity {
 
