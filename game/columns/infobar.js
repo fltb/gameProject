@@ -1,5 +1,5 @@
 import { lang } from "../config/lang.js";
-import { Player } from "../entity/player.js";
+import { Player } from "../entity/player/player.js";
 
 export class InfoBar extends Phaser.GameObjects.DOMElement  {
 
@@ -299,7 +299,7 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
             return {
                 pic: document.querySelector(".self-infos " + className +" img"),
                 info: document.querySelector(".self-infos " + className + " .info"),
-                cover: document.querySelector(".self-infos " + getBar + " .cover"),
+                cover: document.querySelector(".self-infos " + className + " .cover"),
             }
         }
 

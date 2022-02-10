@@ -1,4 +1,4 @@
-import { Entity } from "../entity/entity.js";
+import { Entity } from "../entity/enermy/entity.js";
 import { WorldManager } from "../world/WorldManager.js";
 
 export class EnermyAI {
@@ -64,7 +64,10 @@ export class EnermyAI {
             const targetPosition = that.getTargetPosition();
             finding(selfPosition, targetPosition).then(function (path) {
                 if (!path || !that.charsing) {
-                    return;
+                    that.sleep(100).then(function() {
+                        charsing();
+                        that.easystar.calculate();
+                    })
                 }
 
                 path.splice(0, 1);

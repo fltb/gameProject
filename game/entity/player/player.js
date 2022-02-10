@@ -1,8 +1,8 @@
-import { Entity } from "./entity.js";
-import { config } from "../config/config.js";
-import { WorldManager } from "../world/WorldManager.js";
-import { Item } from "../item/item.js";
-import { Sword } from "../item/sword.js";
+import { Entity } from "../enermy/entity.js";
+import { config } from "../../config/config.js";
+import { WorldManager } from "../../world/WorldManager.js";
+import { Item } from "../../item/item.js";
+import { Sword } from "../../item/sword.js";
 
 export class Player extends Entity {
 

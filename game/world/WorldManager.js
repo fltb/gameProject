@@ -1,4 +1,4 @@
-import { Entity } from "../entity/entity.js";
+import { Entity } from "../entity/enermy/entity.js";
 import { blockDefinations } from "./blockDefinations.js";
 
 export class WorldManager {
