@@ -3,9 +3,9 @@
  */
 
 import { InfoBar } from "../columns/infobar.js";
-import { Player } from "../entity/player.js";
+import { Player } from "../entity/player/player.js";
 import { WorldManager } from "../world/WorldManager.js";
-import { Enermy } from "../entity/enermy.js"
+import { Enermy } from "../entity/enermy/enermy.js"
 import { Sword } from "../item/sword.js";
 
 class Game extends Phaser.Scene {
@@ -88,7 +88,7 @@ class Game extends Phaser.Scene {
         this.enermy.AI.setHateTarget(this.player);
         this.enermy.AI.startCharseTarget();
 
-        this.player.infos.hold.leftHand = new Sword(this, this.player);
+        this.player.infos.hold = new Sword(this, this.player);
     }
 
     update() {

@@ -17,21 +17,33 @@ export class WorldManager {
         this.tileset = map.addTilesetImage(tileset);
         
         this.backgroundLayer = map.createLayer("background", this.tileset);
-        this.physicsLayer = map.createLayer("physics", this.tileset);
+        //this.physicsLayer = map.createLayer("physics", this.tileset);
+
+        /**@type {Array} */
+        this.physicsLayers = [];
+        for (let i = 0; i < this.map.layers.length; i++) {
+            const element = this.map.layers[i];
+            if (element.name.indexOf("physics") === 0) {
+                this.physicsLayers.push(map.createLayer(element.name, this.tileset));
+            }
+        }
+
         this.effectLayer = map.createLayer("effect", this.tileset);
 
         // add collision to blocks, ID!
         const BLOCK_BEGIN = 32;
         const BLOCK_END = 53;
-        this.physicsLayer.setCollisionBetween(BLOCK_BEGIN, BLOCK_END);
+        for (let x = 0; x < this.physicsLayers.length; x++) {
+            this.physicsLayers[x].setCollisionBetween(BLOCK_BEGIN, BLOCK_END);
 
-        for (let i = BLOCK_BEGIN; i <= BLOCK_END; i++) {
-            const properties = this.tileset.getTileProperties(i);
-            if (properties) {
-                const type = properties.type;
-                if (type) {
-                    if (typeof blockDefinations[type].collideCallback === "function") {
-                        this.physicsLayer.setTileIndexCallback(i, blockDefinations[type].collideCallback, this.scene);
+            for (let i = BLOCK_BEGIN; i <= BLOCK_END; i++) {
+                const properties = this.tileset.getTileProperties(i);
+                if (properties) {
+                    const type = properties.type;
+                    if (type) {
+                        if (typeof blockDefinations[type].collideCallback === "function") {
+                            this.physicsLayers[x].setTileIndexCallback(i, blockDefinations[type].collideCallback, this.scene);
+                        }
                     }
                 }
             }
@@ -75,7 +87,10 @@ export class WorldManager {
      * @param {*} [callbackContext]
      */
     addEntityCollide(entity, collideCallback, processCallback, callbackContext) {
-        this.scene.physics.add.collider(entity, this.physicsLayer, collideCallback, processCallback, callbackContext);
+        for (let i = 0; i < this.physicsLayers.length; i++) {
+            const layer = this.physicsLayers[i]
+            this.scene.physics.add.collider(entity, layer, collideCallback, processCallback, callbackContext);
+        }
     }
 
     /**

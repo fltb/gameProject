@@ -3,7 +3,7 @@
  */
 
 import { Enermy } from "../entity/enermy.js";
-import { Player } from "../entity/player.js";
+import { Player } from "../entity/player/player.js";
 import { WorldManager } from "../world/WorldManager.js";
 
 class Game extends Phaser.Scene {
