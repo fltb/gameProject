@@ -255,8 +255,8 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
                 total: infos.mp.total
             },
             bar: {
-                leftClick: infos.hold.rightHand,
-                rightChick: infos.hold.leftHand
+                leftClick: infos.hold,
+                rightChick: infos.skill
             }
         }
 
