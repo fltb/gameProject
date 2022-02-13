@@ -1,4 +1,4 @@
-import { Entity } from "../enermy/entity.js";
+import { Entity } from "../entity.js";
 import { config } from "../../config/config.js";
 import { WorldManager } from "../../world/WorldManager.js";
 import { Item } from "../../item/item.js";
@@ -18,10 +18,9 @@ export class Player extends Entity {
       *          total: Number
       *      },
       *      speed: Number,
-      *      hold: {
-      *          rightHand: Item,
-      *          leftHand: Item,
-      *      },
+      *      hold: Item,
+      *      skill: Skill,
+      *      towards: Boolean 
       *  }}
      */
 
@@ -62,11 +61,11 @@ export class Player extends Entity {
         const pointer = this.scene.input.activePointer;
         if (pointer.rightButtonDown()) {
             // left hand is right click!!!
-            this.useLeft(pointer);
+            this.useSkill(pointer);
         }
 
         if (pointer.leftButtonDown()) {
-            this.useRight(pointer);
+            this.useHand(pointer);
         }
     }
 
@@ -96,8 +95,8 @@ export class Player extends Entity {
     }
 
     /** */
-    useLeft(pointer) {
-        super.useRight(this.getTowordRadian(pointer));
+    useSkill(pointer) {
+        super.useSkill(this.getTowordRadian(pointer));
         if (this.locks.dash) {
             return;
         }
@@ -129,7 +128,7 @@ export class Player extends Entity {
      * 
      * @param {*} pointer 
      */
-    useRight(pointer) {
-        super.useLeft(this.getTowordRadian(pointer));
+    useHand(pointer) {
+        super.useHand(this.getTowordRadian(pointer));
     }
 }
