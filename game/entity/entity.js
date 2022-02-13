@@ -22,10 +22,8 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
       *          total: Number
       *      },
       *      speed: Number,
-      *      hold: {
-      *          rightHand: Item,
-      *          leftHand: Item,
-      *      },
+      *      hold: Item,
+      *      skill: Skill,
       *      towards: Boolean 
       *  }}
      */
@@ -56,10 +54,8 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
                 total: 20
             },
             speed: 150,
-            hold: {
-                rightHand: undefined,
-                leftHand: undefined,
-            },
+            hold: undefined,
+            skill: undefined,
             towards: false 
         }
 
@@ -84,18 +80,18 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
      * 
      * @param {Number} toword - radian
      */
-    useLeft(toword) {
-        if (this.infos.hold.leftHand) {
-           this.infos.hold.leftHand.use(this, toword);
+    useSkill(toword) {
+        if (this.infos.skill) {
+           this.infos.skill.use(this, toword);
         }
     }
 
     /**
      * @param {Number} toword - radian
      */
-    useRight(toword) {
-        if (this.infos.hold.rightHand) {
-            this.infos.hold.rightHand.use(this, toword);
+    useHand(toword) {
+        if (this.infos.hold) {
+            this.infos.hold.use(this, toword);
         }
     }
     /**
