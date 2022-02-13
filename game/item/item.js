@@ -1,4 +1,4 @@
-import { Entity } from "../entity/enermy/entity.js";
+import { Entity } from "../entity/entity.js";
 
 export class Item {
 

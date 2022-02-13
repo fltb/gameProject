@@ -1,6 +1,6 @@
-import { Entity } from "../entity/enermy/entity.js";
-import { Item } from "./item.js";
-export class Sword extends Item {
+import { Entity } from "../entity/entity.js";
+import { MeleeWeapon } from "./meleeweapon.js";
+export class Sword extends MeleeWeapon {
 
     static texturePath = '/game/assets/textures/items/sword/'
     static icon = {
@@ -14,7 +14,7 @@ export class Sword extends Item {
         duration: 200
     }
     /**@param {Phaser.Scene} */
-    static load(scene) {
+    static loader(scene) {
         const path = this.texturePath;
         scene.load.atlas(
             this.animation.atlas,

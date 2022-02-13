@@ -4,7 +4,7 @@ export class Pistol extends Item {
     static texturePath = '/game/assets/textures/items/pistol/'
     static iconName = ''
     /**@param {Phaser.Scene} */
-    static load(scene) {
+    static loader(scene) {
         scene.load.image()
     }
     constructor() {
