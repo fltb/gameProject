@@ -63,11 +63,12 @@ export class EnermyAI {
             const selfPosition = that.getThisPosition();
             const targetPosition = that.getTargetPosition();
             finding(selfPosition, targetPosition).then(function (path) {
-                if (!path || !that.charsing) {
+                if (!path || path === [] || !that.charsing) {
                     that.sleep(100).then(function() {
                         charsing();
                         that.easystar.calculate();
                     })
+                    return;
                 }
 
                 path.splice(0, 1);
@@ -81,38 +82,6 @@ export class EnermyAI {
         }
         charsing();
         that.easystar.calculate();
-        /** 
-         *path finding promise
-         *@returns {Array<Object>} -x, y  
-        function findPath() {
-            return new Promise((resolve, reject) => {
-                try {
-                    const selfPosition = that.getThisPosition();
-                    const targetPosition = that.getTargetPosition();
-                    that.easystar.findPath(selfPosition.x, selfPosition.y, targetPosition.x, targetPosition.y, path => {
-                        const rts = path[0];
-                        path.splice(0, 1);
-                        resolve(rts);
-                    });
-                    that.easystar.calculate();
-                } catch (err) {
-                    reject(err);
-                }
-            });
-        }
-        that.charsing = true;
-
-        // move this entity to the center of a block then start
-        await that.walkToward(that.getThisPosition().x, that.getThisPosition().y);
-        while (that.charsing) {
-            const nextPoint = await findPath();
-            const targetPosition = that.getTargetPosition();
-            await this.walkToward(nextPoint.x, nextPoint.y);
-            if (nextPoint.x === targetPosition.x && nextPoint.y === targetPosition.y) {
-                return true;
-            }
-        }
-        return false;*/
     }
 
     stopCharseTarget() {
