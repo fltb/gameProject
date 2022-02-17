@@ -74,8 +74,22 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
         this.worldManager = worldManager;
         /**@type {Number} - the id of this entity */
         this.id = this.worldManager.addEntity(this);
+
+        /**@type {Array<Function>}  */
+        this.preUpdateList = []
     }
 
+    /**@param {Function} params */
+    addToPreUpdate(params) {
+        this.preUpdateList.push(params);
+    }
+
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
+        this.preUpdateList.forEach(function(func) {
+            func();
+        })
+    }
     /**
      * 
      * @param {Number} toword - radian
@@ -119,22 +133,34 @@ export class Entity extends Phaser.Physics.Arcade.Sprite {
      * @param {Boolean} upDown - true up false down
      */
     moveLeft() {
+        if (this.locks.move) {
+            return;
+        }
         this.infos.towards = true;
         this.playAnimationRun();
         this.setVelocityX(-this.infos.speed);
     }
     moveRight() {
+        if (this.locks.move) {
+            return;
+        }
         this.infos.towards = false;
         this.playAnimationRun();
         this.setVelocityX(this.infos.speed);
     }
 
     moveUp() {
+        if (this.locks.move) {
+            return;
+        }
         this.playAnimationRun();
         this.setVelocityY(-this.infos.speed);
     }
 
     moveDown() {
+        if (this.locks.move) {
+            return;
+        }
         this.playAnimationRun();
         this.setVelocityY(this.infos.speed);
     }

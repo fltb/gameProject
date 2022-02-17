@@ -232,13 +232,15 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
             this.nodes.mp.volumeColor.style.width = Math.floor(dip.mp.now * 100 / dip.mp.total) + "%";
         }
 
+        this.moveToStick();
     }
 
     initElement() {
-        const pxPerEm = parseFloat(getComputedStyle(document.body).fontSize);
+        this.pxPerEm = parseFloat(getComputedStyle(document.body).fontSize);
+        const pxPerEm = this.pxPerEm;
         const height = 2.5 * pxPerEm;
-        const x = this.scene.scale.width / 2;
-        const y = this.scene.scale.height - height;
+        const x = this.scene.scale.width / 4 + this.scene.cameras.main.x / 2;
+        const y = (this.scene.scale.height - height) / 2 + this.scene.cameras.main.y / 2;
         /**@type {Phaser.GameObjects.DOMElement} */
         this.real = this.scene.add.dom(x, y).createFromHTML(InfoBar.HTML);
 
@@ -340,5 +342,16 @@ export class InfoBar extends Phaser.GameObjects.DOMElement  {
 
         // init left and right
         // 暂时别了
+    }
+
+    moveToStick(){
+        const pxPerEm = this.pxPerEm;
+        const height = 2.5 * pxPerEm;
+        const x = this.scene.scale.width / 2 + this.scene.cameras.main.scrollX;
+        const y = (this.scene.scale.height - height) + this.scene.cameras.main.scrollY;
+        
+        //console.log(x, y);
+        this.real.x = x;
+        this.real.y = y;
     }
 }

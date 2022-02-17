@@ -3,6 +3,7 @@ import { config } from "../../config/config.js";
 import { WorldManager } from "../../world/WorldManager.js";
 import { Item } from "../../item/item.js";
 import { Sword } from "../../item/sword.js";
+import { PlayerManager } from "../../logic/playerManager.js";
 
 export class Player extends Entity {
 
@@ -46,15 +47,18 @@ export class Player extends Entity {
         infos.speed = 300
         super(scene, x, y, texture, infos, worldManager);
 
+        /*
         // remember move is not always the "WASD" key on keyboard
         scene.input.mouse.disableContextMenu();
         this.W = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[config.upKey]);
         this.S = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[config.downKey]);
         this.A = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[config.leftKey]);
         this.D = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[config.rightKey]);
+        */
+        this.manager = new PlayerManager(scene, worldManager, this);
     }
 
-    preUpdate(time, delta) {
+    /*preUpdate(time, delta) {
         super.preUpdate(time, delta);
         this.moving();
 
@@ -92,7 +96,7 @@ export class Player extends Entity {
         if (!(this.W.isDown || this.S.isDown || this.A.isDown || this.D.isDown)) {
             this.clearMove();
         }
-    }
+    }*/
 
     /** */
     useSkill(pointer) {
