@@ -7,7 +7,8 @@ export class Pistol extends Item {
     static loader(scene) {
         scene.load.image()
     }
-    constructor() {
+    constructor(scene, owner) {
+        super(scene, owner, Pistol.texturePath + Pistol.icon.file, 500, "Pistol");
 
     }
 }
